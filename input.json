@@ -1,0 +1,14 @@
+{
+    "identity": {
+        "username": "toute",
+        "isServiceAccount": true,
+        "roles": ["admin"]
+    },
+    "operation": {
+        "subject": "genericconversationconsultcase",
+        "action": "canclose"
+    },
+    "resource": {
+        "sites": [2]
+    }
+}

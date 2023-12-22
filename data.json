@@ -1,90 +1,81 @@
 {
-  "users": {
-    "alice": {
-      "roles": ["admin"],
-      "location": {
-        "country": "US",
-        "ip": "8.8.8.8"
-      }
-    },
-    "bob": {
-      "roles": ["employee", "billing"],
-      "location": {
-        "country": "SE",
-        "ip": "23.54.6.78"
-      }
-    },
-     "sunil": {
-      "roles": ["guest"],
-      "location": {
-        "country": "US",
-        "ip": "8.8.8.8"
-      }
-    },
-    "eve": {
-      "roles": ["customer"],
-      "location": {
-        "country": "US",
-        "ip": "8.8.8.8"
-      }
-    }
-  },
-  "role_permissions": {
-    "customer": [
+  "roles": {
+    "admin": [
       {
-        "action": "read",
-        "type": "dog"
+        "subject": "case",
+        "action": "canread"
       },
       {
-        "action": "read",
-        "type": "cat"
+        "subject": "case",
+        "action": "cancreate"
       },
       {
-        "action": "adopt",
-        "type": "dog"
+        "subject": "case",
+        "action": "cansubmit"
       },
       {
-        "action": "adopt",
-        "type": "cat"
+        "subject": "site",
+        "action": "canmanage"
+      },      
+      {
+        "action": "canaccessportaladmin"
       }
     ],
-    "employee": [
+    "requester": [
       {
-        "action": "read",
-        "type": "dog"
+        "subject": "case",
+        "action": "canread"
       },
       {
-        "action": "read",
-        "type": "cat"
-      },
-      {
-        "action": "update",
-        "type": "dog"
-      },
-      {
-        "action": "update",
-        "type": "cat"
+        "subject": "genericconversationconsultcase",
+        "action": "canclose"
       }
-    ],
-    "billing": [
-      {
-        "action": "read",
-        "type": "finance"
-      },
-      {
-        "action": "update",
-        "type": "finance"
-      }
-    ],
-    "guest": [
-     {
-       "action": "read",
-       "type": "cat"
-     },
-     {
-       "action": "read",
-       "type": "finance"
-     }
     ]
-  }
+  },
+  "user_site_roles1": [
+      {
+        "user": "toute",
+        "sites": [
+          {
+            "site": 1,
+            "roles": ["admin"]
+          },
+          {
+            "site": 2,
+            "roles": ["admin", "requester"]
+          }
+        ]
+      },
+      {
+        "user": "mike",
+        "sites": [
+          {
+            "site": 2,
+            "roles": ["requester"]
+          }
+        ]
+      }
+  ],
+  "user_site_roles2": [
+    {
+      "user": "toute",
+      "site": 1,
+      "role": "admin"
+    },
+    {
+      "user": "toute",
+      "site": 2,
+      "role": "admin"
+    },
+    {
+      "user": "toute",
+      "site": 2,
+      "role": "requester"
+    },
+    {
+      "user": "mike",
+      "site": 2,
+      "role": "reporter"
+    }
+  ]
 }
