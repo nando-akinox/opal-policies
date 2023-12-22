@@ -9,5 +9,5 @@ default allow := false
 
 # Allow the action if the user is granted permission to perform the action.
 allow if {
-	data.policies["request"][_].allow[_]
+	data.policies["request"][_].isAllowed[_]
 }

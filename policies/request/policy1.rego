@@ -2,8 +2,8 @@ package policies.request.policy1
 
 import future.keywords.if
 
-default allow := false
+default isAllowed := false
 
-allow if {
+isAllowed if {
 	input.object.requestId == "patate"
 }
