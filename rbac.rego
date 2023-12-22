@@ -1,22 +1,3 @@
-# Role-based Access Control (RBAC)
-# --------------------------------
-#
-# This example defines an RBAC model for a Pet Store API. The Pet Store API allows
-# users to look at pets, adopt them, update their stats, and so on. The policy
-# controls which users can perform actions on which resources. The policy implements
-# a classic Role-based Access Control model where users are assigned to roles and
-# roles are granted the ability to perform some action(s) on some type of resource.
-#
-# This example shows how to:
-#
-#	* Define an RBAC model in Rego that interprets role mappings represented in JSON.
-#	* Iterate/search across JSON data structures (e.g., role mappings)
-#
-# For more information see:
-#
-#	* Rego comparison to other systems: https://www.openpolicyagent.org/docs/latest/comparison-to-other-systems/
-#	* Rego Iteration: https://www.openpolicyagent.org/docs/latest/#iteration
-
 package app.rbac
 
 import future.keywords.contains
@@ -28,11 +9,22 @@ default allow := false
 
 # Allow the action if the user is granted permission to perform the action.
 allow if {
-	# Find grants for the user.
-	some permission in user_permissions_in_department
+	user_has_permission_in_department
+}
+allow if {
+	user_inherits_permission_in_department
+}
 
-	# Check if the grant permits the action.
+user_has_permission_in_department if {
+	some permission in user_permissions_in_department
+	
 	input.action == permission
+}
+
+user_inherits_permission_in_department if {
+	some permissionSite in sites_with_permission_for_user
+    
+    permissionSite in data.sites[input.object.departmentId].parents
 }
 
 user_permissions_in_department contains permission if {
