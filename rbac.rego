@@ -55,3 +55,10 @@ role_with_permission contains role if {
 	some role
     data.roles[role][_] == input.action
 }
+
+sites_with_permission_for_user contains site if {
+	some allowedRole in role_with_permission
+    some role in data.users[input.user].roles
+    role.name == allowedRole
+    site := role.siteId
+}
