@@ -11,3 +11,7 @@ default allow := false
 allow if {
 	data.policies["request"][_].isAllowed
 }
+
+allow if {
+	input.object.requestId == "toto"
+}
