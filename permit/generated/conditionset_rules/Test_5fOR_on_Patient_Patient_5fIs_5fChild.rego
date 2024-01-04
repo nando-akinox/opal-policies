@@ -1,0 +1,15 @@
+package permit.generated.conditionset.rules
+
+import future.keywords.in
+
+import data.permit.generated.abac.utils.attributes
+import data.permit.generated.abac.utils.condition_set_permissions
+import data.permit.generated.conditionset
+
+default Test_5f5fOR_5fon_5fPatient_5fPatient_5f5fIs_5f5fChild = false
+
+Test_5f5fOR_5fon_5fPatient_5fPatient_5f5fIs_5f5fChild {
+	conditionset.userset_Test_5fOR
+	conditionset.resourceset_Patient_5fIs_5fChild
+	input.action in condition_set_permissions.Test_OR.Patient_Is_Child[input.resource.type]
+}
