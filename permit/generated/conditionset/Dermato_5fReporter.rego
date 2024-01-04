@@ -8,6 +8,7 @@ default userset_Dermato_5fReporter = false
 
 userset_Dermato_5fReporter {
 	attributes.user.roles == "Reporter"
+	attributes.user.email == "test"
 	userset_Dermato_5fReporter_any_of_0
 }
 
