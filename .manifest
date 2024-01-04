@@ -1,10 +1,2 @@
-permit/utils
-permit/placeholders
-abac.rego
+utils.rego
 rbac.rego
-permit
-custom/root.rego
-root.rego
-bulk.rego
-any_tenant.rego
-user_permissions.rego

@@ -1,61 +1,56 @@
-package permit.rbac
+package app.rbac
 
-import future.keywords
-
-# Santizied query
-input_query := {
-	"action": input.action,
-	"user": {"key": input.user.key},
-	"resource": {
-		#			"key": input.resource.key,
-		"type": input.resource.type,
-		"tenant": input.resource.tenant,
-	},
-}
+import future.keywords.contains
+import future.keywords.if
+import future.keywords.in
 
 # By default, deny requests.
 default allow := false
 
 # Allow the action if the user is granted permission to perform the action.
-allow {
-	count(matching_grants) > 0
+allow if {
+	user_has_permission_in_department
+}
+allow if {
+	user_inherits_permission_in_department
 }
 
-matching_grants[grant] {
-	# Find grants for the user.
-	some grant in grants
-
-	# Check if the grant permits the action.
-	input_query.action == grant
+user_has_permission_in_department if {
+	some permission in user_permissions_in_department
+	
+	input.action == permission
 }
 
-tenant := tenant_key {
-	input_query.resource.tenant != null
-	tenant_key := input_query.resource.tenant
+user_inherits_permission_in_department if {
+	some permissionSite in sites_with_permission_for_user
+    
+    permissionSite in data.sites[input.object.departmentId].parents
 }
 
-#tenant := tenant_key {
-#	q.resource.tenant == null
-#	q.resource.key != null
-#	q.resource.type != null
-#	data.resources[q.resource.type]
-#	tenant_key := data.resources[q.resource.type][q.resource.key].tenant
-#}
+user_permissions_in_department contains permission if {
+	some role in data.users[input.user].roles
+    role.siteId == input.object.departmentId
 
-user_roles[role_key] {
-	some role_key in data.users[input_query.user.key].roleAssignments[tenant]
+	some permission in data.roles[role.name]
 }
 
-default roles_resource := "__tenant"
+users_with_permission_in_department contains user if {
+	some user
+    some role in data.users[user].roles
+    role.siteId == input.object.departmentId
 
-roles_resource := data.roles_resource
-
-grants[grant] {
-	some role_key in user_roles
-	some grant in data.role_permissions[roles_resource][role_key].grants[input_query.resource.type]
+	some allowedRole in role_with_permission
+	role.name == allowedRole
 }
 
-allowing_roles[role_key] {
-	some role_key in user_roles
-	input.action in data.role_permissions[roles_resource][role_key].grants[input_query.resource.type]
+role_with_permission contains role if {
+	some role
+    data.roles[role][_] == input.action
+}
+
+sites_with_permission_for_user contains site if {
+	some allowedRole in role_with_permission
+    some role in data.users[input.user].roles
+    role.name == allowedRole
+    site := role.siteId
 }
