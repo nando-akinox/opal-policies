@@ -20,6 +20,11 @@ userset_Test_5fOR_any_of_0 {
 	attributes.user.email == "toute"
 }
 
+userset_Test_5fOR_any_of_0 {
+	attributes.user.Specialty == "medecin"
+	attributes.user.roles == "requester"
+}
+
 default userset_Test_5fOR_any_of_0_any_of_1 = false
 
 userset_Test_5fOR_any_of_0_any_of_1 {
