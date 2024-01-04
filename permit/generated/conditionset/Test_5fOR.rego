@@ -25,6 +25,10 @@ userset_Test_5fOR_any_of_0 {
 	attributes.user.roles == "requester"
 }
 
+userset_Test_5fOR_any_of_0 {
+	userset_Test_5fOR_any_of_0_any_of_2
+}
+
 default userset_Test_5fOR_any_of_0_any_of_1 = false
 
 userset_Test_5fOR_any_of_0_any_of_1 {
@@ -33,4 +37,18 @@ userset_Test_5fOR_any_of_0_any_of_1 {
 
 userset_Test_5fOR_any_of_0_any_of_1 {
 	attributes.user.Specialty == "sepc2"
+}
+
+default userset_Test_5fOR_any_of_0_any_of_2 = false
+
+userset_Test_5fOR_any_of_0_any_of_2 {
+	attributes.user.email == "toto1"
+}
+
+userset_Test_5fOR_any_of_0_any_of_2 {
+	attributes.user.email == "toto2"
+}
+
+userset_Test_5fOR_any_of_0_any_of_2 {
+	attributes.user.email == "toto3"
 }
